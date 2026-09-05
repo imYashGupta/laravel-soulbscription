@@ -712,7 +712,6 @@ trait HasSubscriptions
         $this->loadedSubscriptionFeatures = null;
         $this->loadedTicketFeatures = null;
         $this->unsetRelation('subscription');
-        $this->unsetRelation('teamSubscription');
         $this->unsetRelation('featureTickets');
     }
 
