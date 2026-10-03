@@ -28,6 +28,6 @@ class PeriodicityType
         $differenceMethodName = 'diffIn' . $unitInPlural;
         $difference = abs($from->{$differenceMethodName}($to));
 
-        return $difference * $delta;
+        return (int) ($difference * $delta);
     }
 }
