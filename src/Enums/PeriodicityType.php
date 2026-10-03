@@ -2,7 +2,7 @@
 
 namespace LucasDotVin\Soulbscription\Enums;
 
-use Illuminate\Support\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
 class PeriodicityType
@@ -15,7 +15,7 @@ class PeriodicityType
 
     public const Day = 'Day';
 
-    public static function getDateDifference(Carbon $from, Carbon $to, string $unit): int
+    public static function getDateDifference(CarbonInterface $from, CarbonInterface $to, string $unit): int
     {
         if ($from->isAfter($to)) {
             $delta = -1;

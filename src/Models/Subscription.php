@@ -2,11 +2,11 @@
 
 namespace LucasDotVin\Soulbscription\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use LucasDotVin\Soulbscription\Events\SubscriptionCanceled;
 use LucasDotVin\Soulbscription\Events\SubscriptionRenewed;
 use LucasDotVin\Soulbscription\Events\SubscriptionScheduled;
@@ -86,7 +86,7 @@ class Subscription extends Model
         ]);
     }
 
-    public function start(?Carbon $startDate = null): self
+    public function start(?CarbonInterface $startDate = null): self
     {
         $startDate = $startDate ?: today();
 
@@ -102,7 +102,7 @@ class Subscription extends Model
         return $this;
     }
 
-    public function renew(?Carbon $expirationDate = null): self
+    public function renew(?CarbonInterface $expirationDate = null): self
     {
         $this->renewals()->create([
             'renewal' => true,
@@ -126,7 +126,7 @@ class Subscription extends Model
         return $this;
     }
 
-    public function cancel(?Carbon $cancelDate = null): self
+    public function cancel(?CarbonInterface $cancelDate = null): self
     {
         $cancelDate = $cancelDate ?: now();
 
@@ -138,7 +138,7 @@ class Subscription extends Model
         return $this;
     }
 
-    public function suppress(?Carbon $suppressation = null)
+    public function suppress(?CarbonInterface $suppressation = null)
     {
         $suppressationDate = $suppressation ?: now();
 
@@ -164,7 +164,7 @@ class Subscription extends Model
         return $this->expired_at->isPast();
     }
 
-    private function getRenewedExpiration(?Carbon $expirationDate = null)
+    private function getRenewedExpiration(?CarbonInterface $expirationDate = null)
     {
         if (! empty($expirationDate)) {
             return $expirationDate;

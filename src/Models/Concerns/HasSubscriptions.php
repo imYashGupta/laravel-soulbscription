@@ -2,13 +2,14 @@
 
 namespace LucasDotVin\Soulbscription\Models\Concerns;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use LogicException;
@@ -628,7 +629,7 @@ trait HasSubscriptions
             ->where('feature_id', $feature->id);
     }
 
-    protected function featureConsumptionRecurrenceStart(?Feature $feature = null): Carbon
+    protected function featureConsumptionRecurrenceStart(?Feature $feature = null): CarbonInterface
     {
         $subscriptionStart = $this->currentSoulbscriptionSubscription()?->started_at;
 
@@ -646,7 +647,7 @@ trait HasSubscriptions
                 ->value('created_at');
 
             if ($ticketStart) {
-                return Carbon::parse($ticketStart);
+                return Date::parse($ticketStart);
             }
         }
 
@@ -677,7 +678,7 @@ trait HasSubscriptions
             && $consumption > 0;
     }
 
-    protected function featureConsumptionExpiration(Feature $feature): ?Carbon
+    protected function featureConsumptionExpiration(Feature $feature): ?CarbonInterface
     {
         if (! $feature->consumable || ! $feature->periodicity || ! $feature->periodicity_type) {
             return null;
