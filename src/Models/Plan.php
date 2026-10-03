@@ -2,10 +2,10 @@
 
 namespace LucasDotVin\Soulbscription\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use LucasDotVin\Soulbscription\Models\Concerns\HandlesRecurrence;
 
 class Plan extends Model
@@ -33,7 +33,7 @@ class Plan extends Model
         return $this->hasMany(config('soulbscription.models.subscription'));
     }
 
-    public function calculateGraceDaysEnd(Carbon $recurrenceEnd)
+    public function calculateGraceDaysEnd(CarbonInterface $recurrenceEnd)
     {
         return $recurrenceEnd->copy()->addDays($this->grace_days);
     }

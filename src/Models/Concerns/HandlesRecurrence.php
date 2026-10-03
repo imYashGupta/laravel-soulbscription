@@ -2,19 +2,20 @@
 
 namespace LucasDotVin\Soulbscription\Models\Concerns;
 
-use Illuminate\Support\Carbon;
+use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\Date;
 use LucasDotVin\Soulbscription\Enums\PeriodicityType;
 
 trait HandlesRecurrence
 {
-    public function calculateNextRecurrenceEnd(Carbon|string $start = null): Carbon
+    public function calculateNextRecurrenceEnd(CarbonInterface|string|null $start = null): CarbonInterface
     {
         if (empty($start)) {
             $start = now();
         }
 
         if (is_string($start)) {
-            $start = Carbon::parse($start);
+            $start = Date::parse($start);
         }
 
         $recurrences = max(
